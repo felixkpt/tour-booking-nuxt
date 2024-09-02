@@ -11,6 +11,10 @@
         :key="booking.id"
         class="bg-light-primary dark:bg-dark-primary shadow-lg rounded-lg p-6"
       >
+        <div class="text-gray-400 dark:text-dark-text mb-2">
+          Ticket NO: {{ booking?.ticket?.ticket_number }}
+        </div>
+
         <img
           :src="booking.tour.featured_image"
           alt="Tour Image"

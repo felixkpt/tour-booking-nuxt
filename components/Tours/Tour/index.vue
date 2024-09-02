@@ -37,12 +37,11 @@
       <hr class="my-4" />
       <p
         class="tour-description text-lg text-light-text dark:text-dark-text mb-6"
-      >
-        {{ tour.description }}
+        v-html="tour.description">
       </p>
 
       <div class="mt-20">
-        <ToursTourImageSlides :imageSlides="tour.image_slides || []" />
+        <ToursTourImageSlides :imageSlides="tour.destination.image_slides || []" />
       </div>
     </div>
     <div v-else class="text-center text-light-text dark:text-dark-text">

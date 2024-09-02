@@ -3,7 +3,6 @@
     <select
       :id="props.name"
       :name="`${props.name}${props.multiple ? '[]' : ''}`"
-      v-model="selectedOption"
       @change="handleChange"
       @input="handleInputChange"
       :class="{ 'border-red-700': errors[props.name] }"
@@ -11,7 +10,7 @@
       :multiple="props.multiple"
       aria-label="Field label"
     >
-      <option v-for="option in options" :key="option.id" :value="option.id">
+      <option v-for="option in options" :key="option.id" :value="option.id" :selected="handleSelect(option.id)">
         {{
           option.name ||
           `#${option.id}${
@@ -97,6 +96,9 @@ const fetchOptionsThrottled = throttle(async (searchTerm: string) => {
 }, 300);
 
 const handleInputChange = (event: Event) => {
+
+  return
+
   if (!event.isTrusted) return; // Ensure the event is trusted
 
   const target = event.target as HTMLSelectElement;
@@ -124,6 +126,9 @@ const handleInputChange = (event: Event) => {
 };
 
 const handleChange = (event: Event) => {
+
+  return
+
   const target = event.target as HTMLSelectElement;
   let newValue: string | string[];
 
@@ -147,6 +152,9 @@ const ensureCurrentRecordIsSelected = async () => {
     // Skip if the record is already ensured
     if (ensuredRecord.value === String(props.record.id)) return;
 
+
+    return
+    
     // Handle multiple selection
     if (props.multiple && Array.isArray(props.value)) {
       const ids = props.value.map((role: any) => role.id);

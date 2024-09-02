@@ -4,6 +4,6 @@
     <div class="AppMainPage">
       <NuxtPage />
     </div>
-    <AuthUser :isRequired="false" />
+    <AuthUser :isRequired="true" />
   </NuxtLayout>
 </template>

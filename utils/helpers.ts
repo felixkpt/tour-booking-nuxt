@@ -10,8 +10,8 @@ interface Config {
     uuid: () => string;
 }
 
-// Use the environment variable or default to a specific URL
-const be = process.env.BACKEND_URL || 'http://tour-booking-be.local';
+var be =  'https://tour-booking-laravel-sandbox-830880690332.us-central1.run.app'
+var be =  'http://tour-booking-be.local'
 
 export const appConfig: Config = {
     name: 'TravelMate',

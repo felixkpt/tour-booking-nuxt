@@ -37,4 +37,15 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2024-09-02',
+  
+  runtimeConfig: {
+    // Private keys are only available server-side
+    apiSecret: '123',
+
+    // Public keys that are exposed to the client
+    public: {
+      apiBase: '/api'
+    }
+  }
+
 })

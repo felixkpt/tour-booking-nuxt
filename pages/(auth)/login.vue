@@ -81,6 +81,7 @@ import { ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { appConfig } from "~/utils/helpers";
+import { useAuthUser } from "~/composables/user";
 
 const form = ref({
   email: "",
@@ -90,6 +91,7 @@ const form = ref({
 const errors = ref({});
 const successMessage = ref("");
 const router = useRouter();
+const authUser = useAuthUser();
 
 const handleSubmit = async () => {
   try {
@@ -98,7 +100,8 @@ const handleSubmit = async () => {
       form.value
     );
     if (response.data.results) {
-      // Store user and token
+      // Set and store user and token
+      authUser.value = response.data.results
       localStorage.setItem("authUser", JSON.stringify(response.data.results));
       successMessage.value = "Login successful!";
       errors.value = {};
