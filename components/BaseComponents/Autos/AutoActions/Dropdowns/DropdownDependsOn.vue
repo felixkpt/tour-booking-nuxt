@@ -17,7 +17,7 @@
 import { ref, onMounted, watch } from 'vue';
 import fetchOptions from '~/utils/fetchOptions';
 import throttle from '~/utils/throttle';
-import { formatEvent } from './helpers';
+import { formatEvent } from './autosHelpers';
 import useDropdownDependenciesListeners from './useDropdownDependenciesListener';
 
 type Props = {

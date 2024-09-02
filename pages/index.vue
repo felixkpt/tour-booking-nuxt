@@ -24,15 +24,15 @@
     </div>
 
     <ToursList
-      :key="results"
+      :key="currentPage"
       :results="results"
       :title="title"
       :description="description"
       :fetchPage="fetchPage"
       :currentPage="currentPage"
       :totalPages="totalPages"
+      :loading="loading"
     />
-    <!-- add pagination of next /prev -->
   </div>
 </template>
 
@@ -41,12 +41,7 @@ import { ref, type Ref, watch, onMounted } from "vue";
 import axios from "axios";
 import { debounce } from "lodash";
 import { appConfig } from "~/utils/helpers";
-import _ from "lodash";
-const { debounce } = _;
 
-// Define state and data
-const user = useUser();
-const token = ref(user.value?.token);
 const results: Ref<any[]> = ref([]);
 const title = "TravelMate - Discover Your Next Adventure";
 const description =
@@ -55,9 +50,11 @@ const perPage = ref(9);
 const currentPage = ref(1);
 const totalPages = ref(1);
 const searchQuery = ref("");
+const loading = ref(false); // loading state
 
 // Function to fetch tours
 const fetchTours = async (page: number = 1, search: string = "") => {
+  loading.value = true; // Set loading to true before fetching
   try {
     const config = {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : {},
@@ -74,6 +71,8 @@ const fetchTours = async (page: number = 1, search: string = "") => {
     currentPage.value = page;
   } catch (error) {
     console.error("Error fetching tours:", error);
+  } finally {
+    loading.value = false; // Set loading to false after fetching
   }
 };
 

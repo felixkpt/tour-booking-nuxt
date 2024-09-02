@@ -30,7 +30,7 @@
 import { ref, watch, onMounted } from "vue";
 import fetchOptions from "~/utils/fetchOptions";
 import throttle from "~/utils/throttle";
-import { formatEvent } from "./helpers";
+import { formatEvent } from "~/utils/helpers";
 import FormatDate from "~/utils/FormatDate";
 import { useUser } from "~/composables/user";
 import type { ServerModelOptionType } from "~/types";

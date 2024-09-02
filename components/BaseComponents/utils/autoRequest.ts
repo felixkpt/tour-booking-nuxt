@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
-import { appConfig } from './helpers';
 import { publish } from "~/components/BaseComponents/utils/pubSub";
+import { appConfig } from '~/utils/helpers';
 
 export type AutoResponseType<T> = {
     status: number;
