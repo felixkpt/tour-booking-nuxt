@@ -99,7 +99,7 @@ const handleSubmit = async () => {
     );
     if (response.data.results) {
       // Store user and token
-      localStorage.setItem("user", JSON.stringify(response.data.results));
+      localStorage.setItem("authUser", JSON.stringify(response.data.results));
       successMessage.value = "Login successful!";
       errors.value = {};
       // Navigate to the homepage

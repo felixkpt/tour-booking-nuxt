@@ -10,13 +10,16 @@ interface Config {
     uuid: () => string;
 }
 
+// Use the environment variable or default to a specific URL
+const be = process.env.BACKEND_URL || 'http://tour-booking-be.local';
+
 export const appConfig: Config = {
     name: 'TravelMate',
     api: {
         url: (endpoint: string): string => {
             endpoint = endpoint.replace(/\/+/, '/')
 
-            const apiUrl = 'http://tour-booking-be.local';
+            const apiUrl = be;
             return `${apiUrl.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
         }
     },

@@ -24,7 +24,7 @@
     </div>
 
     <ToursList
-      :key="currentPage"
+      :key="results"
       :results="results"
       :title="title"
       :description="description"
@@ -42,7 +42,6 @@ import axios from "axios";
 import { appConfig } from "~/utils/helpers";
 import _ from "lodash";
 const { debounce } = _;
-import { useAuthUser } from "~/composables/user";
 
 const results: Ref<any[]> = ref([]);
 const title = "TravelMate - Discover Your Next Adventure";
@@ -52,23 +51,17 @@ const perPage = ref(9);
 const currentPage = ref(1);
 const totalPages = ref(1);
 const searchQuery = ref("");
-const loading = ref(false); // loading state
-const authUser = useAuthUser();
-const token = authUser.value?.token
+const loading = ref(true); // loading state
 
 // Function to fetch tours
 const fetchTours = async (page: number = 1, search: string = "") => {
   loading.value = true; // Set loading to true before fetching
-  try {
-    const config = {
-      headers: token.value ? { Authorization: `Bearer ${token.value}` } : {},
-    };
 
+  try {
     const response = await axios.get(
       appConfig.api.url(
         `/api/tours?page=${page}&search=${search}&per_page=${perPage.value}`
-      ),
-      config
+      )
     );
     results.value = response.data.results;
     totalPages.value = response.data.results.last_page;
@@ -80,23 +73,9 @@ const fetchTours = async (page: number = 1, search: string = "") => {
   }
 };
 
-// Watch for changes in the token and fetch data when it changes
-watch(
-  () => authUser.value?.token,
-  (newToken) => {
-    token.value = newToken;
-    if (newToken) {
-      fetchTours();
-    }
-  },
-  { immediate: true }
-);
-
 // Fetch data when component is mounted if token is already available
 onMounted(() => {
-  if (token.value) {
-    fetchTours();
-  }
+  fetchTours();
 });
 
 // Function to fetch page data

@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-3 px-3">
+  <div class="mt-3 mx-auto px-3 max-w-7xl">
     <h3 class="text-gray-500 dark:text-gray-300 font-bold text-2xl">
-      My Tours
+      My Tour bookings
     </h3>
 
     <!-- Booking Cards -->
@@ -51,6 +51,7 @@
         Next
       </button>
     </div>
+    <AuthUser :isRequired="true" />
   </div>
 </template>
 

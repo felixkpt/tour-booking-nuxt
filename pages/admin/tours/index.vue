@@ -30,6 +30,7 @@
       @setModelDetails="setModelDetails"
       :reloadKey="autoTableReloadKey"
     />
+    
     <BaseComponentsAutosAutoActionsAllActionsModals
       :modelID="modelID"
       :modelNameSingular="modelNameSingular"

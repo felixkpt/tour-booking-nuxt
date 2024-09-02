@@ -158,7 +158,7 @@ const handleSubmit = async () => {
     );
     if (response.data.status) {
       // Store user and token
-      localStorage.setItem('user', JSON.stringify(response.data.results));
+      localStorage.setItem("authUser", JSON.stringify(response.data.results));
       successMessage.value = 'Registration successful! You are now logged in.';
       errors.value = {};
       // Navigate to the homepage

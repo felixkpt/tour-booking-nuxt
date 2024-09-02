@@ -130,7 +130,7 @@ const handleChange = (event: Event) => {
   if (props.multiple) {
     newValue = Array.from(target.selectedOptions, (option) => option.value);
   } else {
-    // console.log("Straight value:",target.value)
+    console.log("Straight value:",target.value)
     newValue = target.value;
   }
 

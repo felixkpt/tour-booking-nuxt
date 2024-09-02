@@ -70,7 +70,7 @@
             >
               <button
                 @click="toggleDropdown(index)"
-                class="bg-light-secondary text-light-text dark:text-dark-text px-3 py-2 border border-light-border rounded-md focus:outline-none"
+                class="bg-light-secondary text-light-text dark:text-dark-text px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
               >
                 Actions
               </button>
@@ -255,13 +255,12 @@ const handleSearch = () => {
 };
 
 function getDynamicValue(row: any, path: string) {
-
-if (!path.match(/\./)) {
-    const val = row[path]
+  if (!path.match(/\./)) {
+    const val = row[path];
     return String(val);
-} else {
-    return path.split('.').reduce((acc, prop) => acc && acc[prop], row);
-}
+  } else {
+    return path.split(".").reduce((acc, prop) => acc && acc[prop], row);
+  }
 }
 
 const prevPage = () => {
@@ -283,7 +282,11 @@ watch(currentPage, () => fetchData());
 watch(searchQuery, () => {
   debouncedFetchData();
 });
-onMounted(() => fetchData());
+onMounted(() =>
+  setTimeout(() => {
+    fetchData();
+  }, 450)
+);
 
 // Watch for changes in reloadKey
 watch(
