@@ -37,7 +37,6 @@ onMounted(() => {
   }) => {
     record.value = newRecord;
     headers.value = newHeaders;
-    console.log("handleRecord:", props.method);
   };
 
   // Subscribe to the record event

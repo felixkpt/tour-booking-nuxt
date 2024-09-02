@@ -21,7 +21,6 @@ export const subscribe = (action: string, callback: CallbackFunction) => {
     if (action === '*_submit') {
         submitSubscribers.push(callback);
     }else if (action === '*_done') {
-        console.log('doneSubscribers:',doneSubscribers)
         doneSubscribers.push(callback);
     } else {
         if (!subscribers[action]) {

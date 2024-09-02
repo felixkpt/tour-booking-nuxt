@@ -130,7 +130,8 @@ import axios from "axios";
 import { appConfig } from "~/utils/helpers";
 import { useUser } from "~/composables/user";
 
-import { debounce } from "lodash";
+import _ from "lodash";
+const { debounce } = _;
 
 // Props
 const props = defineProps({

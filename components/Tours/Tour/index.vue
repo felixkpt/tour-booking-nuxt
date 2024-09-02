@@ -64,5 +64,4 @@ const props = defineProps({
 });
 
 const tour = ref(props.tour);
-console.log("TTTT", tour);
 </script>

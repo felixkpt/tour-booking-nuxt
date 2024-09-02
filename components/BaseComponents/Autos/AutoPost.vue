@@ -15,8 +15,6 @@ const handleSubmit = async ({ action, method, formData }: any) => {
   const user = useUser();
   const token = user.value?.token
 
-  console.log(user, 'UserToken', token)
-
   try {
     const response = await autoRequest(action, method, formData, token);
 

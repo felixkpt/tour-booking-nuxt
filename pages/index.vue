@@ -41,7 +41,8 @@ import { ref, type Ref, watch, onMounted } from "vue";
 import axios from "axios";
 import { debounce } from "lodash";
 import { appConfig } from "~/utils/helpers";
-import { useUser } from "~/composables/user";
+import _ from "lodash";
+const { debounce } = _;
 
 // Define state and data
 const user = useUser();

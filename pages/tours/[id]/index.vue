@@ -13,7 +13,7 @@
       :token="token"
       :bodyData="{ tour_id: tourId, maxSlots: tour?.slots, slots: 1 }"
       @close="showModal = false"
-      @confirm="handleBooking"
+      @doneBooking="handleBooking"
     >
       <p>Are you sure you want to book this tour?</p>
     </Modal>
@@ -86,6 +86,7 @@ const showConfirmModal = () => {
 
 // Handle booking
 const handleBooking = async () => {
-  showModal.value = false; // Close the modal
+  showModal.value = false;
+  fetchTour()
 };
 </script>

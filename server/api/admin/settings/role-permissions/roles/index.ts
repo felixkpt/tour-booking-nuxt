@@ -17,8 +17,6 @@ export default defineEventHandler(async (event) => {
         // Assuming the API response structure is similar to Laravel's paginated content
         const { data } = response
 
-        console.log(data.results.fillable)
-
         return data.results
     } catch (error) {
         console.error('Failed to fetch user data:', error)

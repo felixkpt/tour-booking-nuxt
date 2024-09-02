@@ -21,7 +21,6 @@ const actionHeader = computed(
     props.headers.find((header) => header.key === "action")
 );
 
-console.log('headers', props.headers, 'actionHeader.value:', actionHeader.value);
 </script>
 
 <template>

@@ -87,7 +87,6 @@ const props = defineProps<{
 // Filtered list of fillable fields (if any filtering logic is needed)
 const fillableFieldsFiltered = computed(() => props.fillableFields);
 
-console.log('fillableFieldsFiltered::::',fillableFieldsFiltered.value)
 onMounted(() => {
   // Subscribe to the refresh event for creating/updating a record
   subscribe(`${props.modelID}_CreateOrUpdate_refresh`, () => {

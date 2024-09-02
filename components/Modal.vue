@@ -92,7 +92,7 @@
     },
   });
   
-  const emit = defineEmits(["close", "confirm"]);
+  const emit = defineEmits(["close", "doneBooking"]);
   
   const loading = ref(false);
   const responseMessage = ref<string | null>(null);
@@ -124,7 +124,7 @@
       // If the response is not OK, set the response message
       responseMessage.value = result.message || "Error processing request";
     } else {
-      emit("confirm");
+      emit("doneBooking");
     }
   } catch (error) {
     responseMessage.value = "Error processing request";
