@@ -37,7 +37,7 @@ export function getModelTag(apiEndpoint: string) {
 }
 
 export const formatEvent = (name: string, newValue: any) => {
-    let formattedValue: any[];
+    let formattedValue;
 
     if (Array.isArray(newValue)) {
         formattedValue = newValue.map((item) => item.id || item);

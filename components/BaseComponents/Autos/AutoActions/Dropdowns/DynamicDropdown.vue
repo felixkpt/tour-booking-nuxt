@@ -10,11 +10,18 @@
       :multiple="props.multiple"
       aria-label="Field label"
     >
-      <option v-for="option in options" :key="option.id" :value="option.id" :selected="handleSelect(option.id)">
+      <option
+        v-for="option in options"
+        :key="option.id"
+        :value="option.id"
+        :selected="handleSelect(option.id)"
+      >
         {{
           option.name ||
           `#${option.id}${
-            option?.created_at ? " (" + FormatDate.toLocaleDateString(option.created_at) + ")" : ""
+            option?.created_at
+              ? " (" + FormatDate.toLocaleDateString(option.created_at) + ")"
+              : ""
           }`
         }}
       </option>
@@ -95,10 +102,9 @@ const fetchOptionsThrottled = throttle(async (searchTerm: string) => {
   loading.value = false;
 }, 300);
 
+function handleSelect(newVal: any) {}
+
 const handleInputChange = (event: Event) => {
-
-  return
-
   if (!event.isTrusted) return; // Ensure the event is trusted
 
   const target = event.target as HTMLSelectElement;
@@ -126,16 +132,13 @@ const handleInputChange = (event: Event) => {
 };
 
 const handleChange = (event: Event) => {
-
-  return
-
   const target = event.target as HTMLSelectElement;
   let newValue: string | string[];
 
   if (props.multiple) {
     newValue = Array.from(target.selectedOptions, (option) => option.value);
   } else {
-    console.log("Straight value:",target.value)
+    console.log("Straight value:", target.value);
     newValue = target.value;
   }
 
@@ -152,9 +155,6 @@ const ensureCurrentRecordIsSelected = async () => {
     // Skip if the record is already ensured
     if (ensuredRecord.value === String(props.record.id)) return;
 
-
-    return
-    
     // Handle multiple selection
     if (props.multiple && Array.isArray(props.value)) {
       const ids = props.value.map((role: any) => role.id);
