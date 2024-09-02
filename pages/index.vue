@@ -1,5 +1,17 @@
 <template>
   <div>
+    <div
+      class="bg-light-primary-subtle text-light-text p-8 text-center dark:bg-dark-primary-subtle dark:text-dark-text cursor-default"
+    >
+      <h1
+        class="text-4xl font-bold mb-4 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-300 dark:via-purple-300 dark:to-pink-300"
+      >
+        {{ title }}
+      </h1>
+      <p class="text-lg max-w-3xl mx-auto">
+        {{ description }}
+      </p>
+    </div>
     <!-- Search Input -->
     <div class="p-4">
       <input
@@ -7,15 +19,15 @@
         v-model="searchQuery"
         @input="debouncedSearch"
         placeholder="Search tours..."
-        class="w-full p-2 border rounded"
+        class="w-full p-2 border dark:border-gray-500 dark:text-gray-100 rounded dark:bg-light-text shadow"
       />
     </div>
 
-    <ToursList 
-      :key="results" 
-      :results="results" 
-      :title="title" 
-      :description="description" 
+    <ToursList
+      :key="results"
+      :results="results"
+      :title="title"
+      :description="description"
       :fetchPage="fetchPage"
       :currentPage="currentPage"
       :totalPages="totalPages"
@@ -36,20 +48,26 @@ const user = useUser();
 const token = ref(user.value?.token);
 const results: Ref<any[]> = ref([]);
 const title = "TravelMate - Discover Your Next Adventure";
-const description = "TravelMate offers a wide range of tours to exciting destinations. Explore our available tours, view detailed information, and book your next adventure with ease.";
+const description =
+  "TravelMate offers a wide range of tours to exciting destinations. Explore our available tours, view detailed information, and book your next adventure with ease.";
 const perPage = ref(9);
 const currentPage = ref(1);
 const totalPages = ref(1);
-const searchQuery = ref('');
+const searchQuery = ref("");
 
 // Function to fetch tours
-const fetchTours = async (page: number = 1, search: string = '') => {
+const fetchTours = async (page: number = 1, search: string = "") => {
   try {
     const config = {
-      headers: token.value ? { Authorization: `Bearer ${token.value}` } : {}
+      headers: token.value ? { Authorization: `Bearer ${token.value}` } : {},
     };
 
-    const response = await axios.get(appConfig.api.url(`/api/tours?page=${page}&search=${search}&per_page=${perPage.value}`), config);
+    const response = await axios.get(
+      appConfig.api.url(
+        `/api/tours?page=${page}&search=${search}&per_page=${perPage.value}`
+      ),
+      config
+    );
     results.value = response.data.results;
     totalPages.value = response.data.results.last_page;
     currentPage.value = page;

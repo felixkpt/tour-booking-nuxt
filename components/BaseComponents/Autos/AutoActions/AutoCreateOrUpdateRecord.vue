@@ -253,6 +253,7 @@ const handleChangeFile = (e: Event) => {
 };
 
 const handleSubmit = () => {
+  // console.log('formData.value::',formData.value)
   loading.value = true;
   generalError.value = null;
   errors.value = {};

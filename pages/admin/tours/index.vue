@@ -63,7 +63,7 @@ const headers = [
   { key: "id", label: "ID", renderCell: (row: any) => `#${row.id}` },
   { key: "name", label: "Name" },
   { key: "featured_image", label: "featured_image" },
-  { key: "destination_id", label: "Guard" },
+  { key: "destination.name", label: "Destination" },
   { key: "description", label: "description" },
   { key: "price", label: "price" },
   { key: "slots", label: "slots" },

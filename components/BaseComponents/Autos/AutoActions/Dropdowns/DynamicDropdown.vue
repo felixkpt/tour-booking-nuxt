@@ -109,10 +109,11 @@ const handleInputChange = (event: Event) => {
     );
   } else {
     newInputValue = target.value;
+    // console.log("newInputValue:",newInputValue)
   }
 
   setTimeout(() => {
-    emit("inputChange", newInputValue);
+    // emit("inputChange", newInputValue);
   }, 800);
 
   if (typeof newInputValue === "string" && newInputValue.trim() !== "") {
@@ -129,6 +130,7 @@ const handleChange = (event: Event) => {
   if (props.multiple) {
     newValue = Array.from(target.selectedOptions, (option) => option.value);
   } else {
+    // console.log("Straight value:",target.value)
     newValue = target.value;
   }
 
@@ -137,10 +139,10 @@ const handleChange = (event: Event) => {
 };
 
 const ensureCurrentRecordIsSelected = async () => {
-  console.log("Options value:", options.value);
+  // console.log("Options value:", options.value);
 
   if (options.value.length > 0 && props.record && props.value) {
-    console.log("Passed value:", props.value);
+    // console.log("Passed value:", props.value);
 
     // Skip if the record is already ensured
     if (ensuredRecord.value === String(props.record.id)) return;
@@ -183,7 +185,6 @@ const ensureCurrentRecordIsSelected = async () => {
           }
         } catch (error: any) {
           console.error("Error fetching options:", error);
-          // Handle error (e.g., show a notification)
         }
         loading.value = false;
       }

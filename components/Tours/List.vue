@@ -1,17 +1,5 @@
 <template>
   <div>
-    <div
-      class="bg-light-primary-subtle text-light-text p-6 text-center dark:bg-dark-primary-subtle dark:text-dark-text cursor-default"
-    >
-      <h1
-        class="text-4xl font-bold mb-4 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-300 dark:via-purple-300 dark:to-pink-300"
-      >
-        {{ title }}
-      </h1>
-      <p class="text-lg max-w-3xl mx-auto">
-        {{ description }}
-      </p>
-    </div>
     <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
       <li
         v-for="tour in tours"
