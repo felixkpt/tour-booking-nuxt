@@ -4,7 +4,7 @@
 import { onMounted, onUnmounted } from "vue";
 import { publish, subscribe } from "~/components/BaseComponents/utils/pubSub";
 import { autoRequest } from "../utils/autoRequest";
-import { useUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/user";
 
 const props = defineProps({
   modelID: String,
@@ -12,8 +12,8 @@ const props = defineProps({
 
 const handleSubmit = async ({ action, method, formData }: any) => {
   // Retrieve the user object, which includes the token
-  const user = useUser();
-  const token = user.value?.token
+  const authUser = useAuthUser();
+  const token = authUser.value?.token
 
   try {
     const response = await autoRequest(action, method, formData, token);

@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/user";
 import type { TourType } from "~/types/tours";
 import { appConfig } from "~/utils/helpers";
 
@@ -49,8 +49,8 @@ const route = useRoute();
 const tourId = route.params.id;
 
 // Get user token
-const user = useUser();
-const token = ref(user.value?.token); // Make token reactive
+const authUser = useAuthUser();
+const token = ref(authUser.value?.token); // Make token reactive
 
 // Function to fetch the tour data from the backend
 const fetchTour = async () => {
@@ -71,7 +71,7 @@ const fetchTour = async () => {
 
 // Watch for changes in the token and fetch data when it changes
 watch(
-  () => user.value?.token,
+  () => authUser.value?.token,
   (newToken) => {
     token.value = newToken;
     fetchTour();

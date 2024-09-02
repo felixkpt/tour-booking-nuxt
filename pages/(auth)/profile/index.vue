@@ -44,17 +44,17 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { useUser } from '~/composables/user';
+import { useAuthUser } from '~/composables/user';
 import BasicInfo from './Includes/BasicInfo.vue';
 import UpdatePass from './Includes/UpdatePass.vue';
 
 
-const user = useUser(); // Accessing the user state
+const authUser = useAuthUser(); // Accessing the user state
 const imageUrl = ref('users/default-user.png');
 const defaultUserBackDrop = ('@/assets/images/default_user_back_drop.png');
 
 // Watch for user updates
-watch(user, (newUser) => {
+watch(authUser, (newUser) => {
   if (newUser?.avatar) {
     imageUrl.value = newUser.avatar;
   }

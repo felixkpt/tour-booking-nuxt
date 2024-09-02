@@ -65,7 +65,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/user";
 
 export default defineComponent({
   props: {
@@ -75,16 +75,16 @@ export default defineComponent({
     },
   },
   setup() {
-    const user = useUser();
+    const authUser = useAuthUser();
     // Handle user logout
     const handleLogout = () => {
-      localStorage.removeItem("user");
-      user.value = null;
+      localStorage.removeItem("authUser");
+      authUser.value = null;
       window.location.href = "/";
     };
 
     return {
-      user,
+      authUser,
       handleLogout,
     };
   },

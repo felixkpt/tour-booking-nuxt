@@ -56,12 +56,12 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { useUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/user";
 import FormatDate from "~/utils/FormatDate";
 import { appConfig } from "~/utils/helpers";
 
-const user = useUser();
-const token = ref(user.value?.token);
+const authUser = useAuthUser();
+const token = ref(authUser.value?.token);
 
 const bookings = ref([]);
 const currentPage = ref(1);
@@ -100,7 +100,7 @@ const fetchData = async (page: number) => {
 
 // Watch for changes in the token and fetch data when it changes
 watch(
-  () => user.value?.token,
+  () => authUser.value?.token,
   (newToken) => {
     token.value = newToken;
     fetchData(currentPage.value);
@@ -108,20 +108,20 @@ watch(
   { immediate: true } // Fetch data immediately if token is available
 );
 
-function statusClass(statusSlug) {
-    switch (statusSlug) {
-      case 'pending':
-        return 'text-yellow-500';
-      case 'confirmed':
-        return 'text-green-500';
-      case 'completed':
-        return 'text-blue-500';
-      case 'cancelled':
-        return 'text-red-500';
-      default:
-        return 'text-gray-500';
-    }
+function statusClass(statusSlug: string) {
+  switch (statusSlug) {
+    case "pending":
+      return "text-yellow-500";
+    case "confirmed":
+      return "text-green-500";
+    case "completed":
+      return "text-blue-500";
+    case "cancelled":
+      return "text-red-500";
+    default:
+      return "text-gray-500";
   }
+}
 </script>
 
 <style scoped>

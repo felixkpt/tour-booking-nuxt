@@ -39,8 +39,10 @@
 <script setup lang="ts">
 import { ref, type Ref, watch, onMounted } from "vue";
 import axios from "axios";
-import { debounce } from "lodash";
 import { appConfig } from "~/utils/helpers";
+import _ from "lodash";
+const { debounce } = _;
+import { useAuthUser } from "~/composables/user";
 
 const results: Ref<any[]> = ref([]);
 const title = "TravelMate - Discover Your Next Adventure";
@@ -51,6 +53,8 @@ const currentPage = ref(1);
 const totalPages = ref(1);
 const searchQuery = ref("");
 const loading = ref(false); // loading state
+const authUser = useAuthUser();
+const token = authUser.value?.token
 
 // Function to fetch tours
 const fetchTours = async (page: number = 1, search: string = "") => {
@@ -78,7 +82,7 @@ const fetchTours = async (page: number = 1, search: string = "") => {
 
 // Watch for changes in the token and fetch data when it changes
 watch(
-  () => user.value?.token,
+  () => authUser.value?.token,
   (newToken) => {
     token.value = newToken;
     if (newToken) {

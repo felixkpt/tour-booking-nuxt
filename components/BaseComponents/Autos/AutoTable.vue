@@ -128,7 +128,7 @@
 import { ref, computed, watch, onMounted, defineProps, defineEmits } from "vue";
 import axios from "axios";
 import { appConfig } from "~/utils/helpers";
-import { useUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/user";
 
 import _ from "lodash";
 const { debounce } = _;
@@ -191,12 +191,12 @@ const fetchData = async () => {
   loading.value = true;
 
   try {
-    const user = useUser();
+    const authUser = useAuthUser();
     const config = {};
 
-    if (user.value?.token) {
+    if (authUser.value?.token) {
       config.headers = {
-        Authorization: `Bearer ${user.value.token}`,
+        Authorization: `Bearer ${authUser.value.token}`,
       };
     }
 

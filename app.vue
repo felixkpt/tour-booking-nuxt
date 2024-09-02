@@ -9,33 +9,33 @@
 
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { useUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/user";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import { appConfig } from "./utils/helpers";
 
 // Initialize user state
-const user = useUser();
+const authUser = useAuthUser();
 const router = useRouter();
 
 const fetchUser = async () => {
   try {
     const response = await axios.get(appConfig.api.url("/api/auth/get-user"), {
       headers: {
-        Authorization: `Bearer ${user.value?.token}`,
+        Authorization: `Bearer ${authUser.value?.token}`,
         "Content-Type": "application/json",
         Accept: "application/json",
       },
     });
 
     // Update user with new data and token
-    user.value = {
+    authUser.value = {
       ...response.data.results,
     };
 
     // Store updated user data in localStorage
     setTimeout(() => {
-      localStorage.setItem("user", JSON.stringify(user.value));
+      localStorage.setItem("user", JSON.stringify(authUser.value));
     }, 200);
   } catch (error) {
     if (error.response?.status === 401) {
@@ -51,7 +51,7 @@ const fetchUser = async () => {
 onMounted(async () => {
   const storedUser = localStorage.getItem("user");
   if (storedUser) {
-    user.value = JSON.parse(storedUser);
+    authUser.value = JSON.parse(storedUser);
     setTimeout(async () => {
       await fetchUser();
     }, 100);

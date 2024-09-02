@@ -32,7 +32,7 @@ import fetchOptions from "~/utils/fetchOptions";
 import throttle from "~/utils/throttle";
 import { formatEvent } from "~/utils/helpers";
 import FormatDate from "~/utils/FormatDate";
-import { useUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/user";
 import type { ServerModelOptionType } from "~/types";
 
 const props = defineProps<{
@@ -60,8 +60,8 @@ const ensuredRecord = ref<string | undefined>();
 const timeoutRef = ref<number | null>(null);
 const errors = ref<Record<string, string>>({});
 
-const user = useUser();
-const token = user.value?.token;
+const authUser = useAuthUser();
+const token = authUser.value?.token;
 
 const setInitialRecords = async () => {
   loading.value = true;

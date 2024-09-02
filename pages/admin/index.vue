@@ -31,11 +31,11 @@
   <script setup lang="ts">
   import { ref, watch } from "vue";
   import { appConfig } from "~/utils/helpers";
-  import { useUser } from "~/composables/user";
+  import { useAuthUser } from "~/composables/user";
   
   const stats = ref(null);
-  const user = useUser();
-  const token = ref(user.value?.token);
+  const authUser = useAuthUser();
+  const token = ref(authUser.value?.token);
   
   const fetchData = async () => {
     if (!token.value) {
@@ -59,7 +59,7 @@
   };
   
   watch(
-    () => user.value?.token,
+    () => authUser.value?.token,
     (newToken) => {
       token.value = newToken;
       setTimeout(() => {
