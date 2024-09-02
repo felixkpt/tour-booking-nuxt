@@ -8,7 +8,7 @@ export default {
         light: {
           primary: 'rgb(242 240 240)',  // Light color for dark mode
           'primary-subtle': 'rgb(254 252 252)',  // Subtle light mode color
-          secondary: '#2d3748', // Darker color for light mode
+          secondary: 'redrgb(226 232 240)', // Darker color for light mode
           text: '#2d3748', // Text color for light mode
           info: {
             DEFAULT: '#bee3f8', // Info color for light mode
@@ -22,10 +22,14 @@ export default {
             DEFAULT: '#fc8181', // Error color for light mode
             subtle: '#fed7d7', // Subtle error color for light mode
           },
+          border: {
+            DEFAULT: '#e2e8f0', // Default border color for light mode
+            subtle: '#edf2f7', // Subtle border color for light mode
+          },
         },
         dark: {
           primary: '#1a202c',  // Dark color for light mode
-          'primary-subtle': 'rgb(36 42 53)',  // Subtle light mode color
+          'primary-subtle': 'rgb(36 42 53)',  // Subtle dark mode color
           secondary: '#f7fafc', // Lighter color for dark mode
           text: '#edf2f7', // Text color for dark mode
           info: {
@@ -40,6 +44,10 @@ export default {
             DEFAULT: '#c53030', // Error color for dark mode
             subtle: '#fc8181', // Subtle error color for dark mode
           },
+          border: {
+            DEFAULT: '#2d3748', // Default border color for dark mode
+            subtle: '#4a5568', // Subtle border color for dark mode
+          },
         },
       },
     },
@@ -51,5 +59,6 @@ export default {
       borderColor: ['dark'],
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-primeui')]
+
 }

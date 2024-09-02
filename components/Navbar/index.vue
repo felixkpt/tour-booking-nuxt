@@ -1,27 +1,33 @@
 <template>
-  <nav class="bg-white shadow-lg">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="flex justify-between">
+  <nav class="bg-light-primary shadow-lg dark:bg-dark-primary">
+    <div class="max-w-7xl mx-auto px-4 py-2">
+      <div class="flex justify-between items-center">
         <!-- Logo -->
-        <NavbarLogo />
+        <NavbarLogo class="text-light-text dark:text-dark-text" />
 
         <!-- Primary Nav -->
-        <NavbarPrimaryNav />
+        <NavbarPrimaryNav class="text-light-text dark:text-dark-text" />
 
         <!-- User Profile Dropdown -->
         <NavbarProfileDropdown
           @toggleDropdown="toggleDropdown"
           :dropdownOpen="dropdownOpen"
+          class="text-light-text dark:text-dark-text"
         />
 
         <!-- Mobile menu button -->
-        <NavbarMobileMenuButton @toggleMobileMenu="toggleMobileMenu" />
-        <NavbarThemeToggler />
+        <NavbarMobileMenuButton
+          @toggleMobileMenu="toggleMobileMenu"
+          class="text-light-text dark:text-dark-text"
+        />
+
+        <!-- Theme Toggler -->
+        <NavbarThemeToggler class="text-light-text dark:text-dark-text" />
       </div>
     </div>
 
     <!-- Mobile Nav -->
-    <NavbarMobileNav :mobileMenuOpen="mobileMenuOpen" />
+    <NavbarMobileNav :mobileMenuOpen="mobileMenuOpen" class="bg-light-primary dark:bg-dark-primary" />
   </nav>
 </template>
 

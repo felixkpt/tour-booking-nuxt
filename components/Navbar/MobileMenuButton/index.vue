@@ -1,5 +1,5 @@
 <template>
-  <div class="md:hidden flex items-center">
+  <div class="lg:hidden flex items-center">
     <button @click="$emit('toggleMobileMenu')">
       <svg
         class="w-6 h-6 text-gray-700"
