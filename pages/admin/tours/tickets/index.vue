@@ -59,11 +59,11 @@
 
   const headers = [
     { key: "id", label: "ID", renderCell: (row: any) => `#${row.id}` },
-    { key: "tour_booking_id", label: "tour_booking_id" },
-    { key: "ticket_number", label: "ticket_number" },
-    { key: "creator_id", label: "creator_id" },
-    { key: "status_id", label: "status_id" },
-    { key: "created_at", label: "created_at" },
+    { key: "tour_booking.tour.name", label: "Tour" },
+    { key: "ticket_number", label: "Ticket NO" },
+    { key: "creator.name", label: "Created By" },
+    { key: "status.name", label: "Status" },
+    { key: "created_at", label: "Created At" },
   ];
   
   const key = ref(0);

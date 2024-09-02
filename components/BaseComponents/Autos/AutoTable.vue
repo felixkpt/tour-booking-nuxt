@@ -18,7 +18,7 @@
         @input="handleSearch"
         type="text"
         placeholder="Search..."
-        class="w-full px-3 py-2 border bg-light-primary dark:bg-dark-primary border-light-border rounded-md text-light-text dark:text-light-primary-subtle focus:outline-none focus:border-light-secondary focus:ring-1 focus:ring-light-info"
+        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 dark:text-gray-100 rounded dark:bg-light-text focus:outline-none focus:border-light-secondary focus:ring-1 focus:ring-light-info"
       />
     </div>
     <table class="w-full border-collapse mb-5">

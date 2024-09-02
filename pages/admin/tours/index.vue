@@ -30,7 +30,7 @@
       @setModelDetails="setModelDetails"
       :reloadKey="autoTableReloadKey"
     />
-    
+
     <BaseComponentsAutosAutoActionsAllActionsModals
       :modelID="modelID"
       :modelNameSingular="modelNameSingular"
@@ -62,10 +62,19 @@ const modelID = ref(uuidv4());
 const apiUrl = ref("/api/admin/tours");
 const headers = [
   { key: "id", label: "ID", renderCell: (row: any) => `#${row.id}` },
+  {
+    key: "featured_image",
+    label: "Image",
+    renderCell: (row: any) => `
+    <span class="block overflow-hidden rounded shadow w-[40px] h-[40px]">
+      <img src="${
+        row.featured_image || "-"
+      }" alt="Featured Image" class="w-full h-full object-cover" />
+    </span>`,
+  },
   { key: "name", label: "Name" },
-  { key: "featured_image", label: "featured_image" },
+
   { key: "destination.name", label: "Destination" },
-  { key: "description", label: "description" },
   { key: "price", label: "price" },
   { key: "slots", label: "slots" },
   { key: "creator.name", label: "Created By" },

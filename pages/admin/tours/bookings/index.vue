@@ -1,17 +1,20 @@
 <template>
-    <div>
-      <div class="flex justify-between mb-2">
-        <h3 class="text-gray-500 dark:text-gray-300 font-bold text-2xl">
-          {{ `${modelNamePlural ? modelNamePlural + " list" : ""}` }}
-        </h3>
-        <button @click="() => actionHandlers.createRecord()" class="btn btn-primary">
-          {{ `Create ${modelNameSingular || "Record"}` }}
-        </button>
-      </div>
-      <BaseComponentsAutosAutoTable
-        :headers="headers"
-        :api-url="apiUrl"
-        :actions="[
+  <div>
+    <div class="flex justify-between mb-2">
+      <h3 class="text-gray-500 dark:text-gray-300 font-bold text-2xl">
+        {{ `${modelNamePlural ? modelNamePlural + " list" : ""}` }}
+      </h3>
+      <button
+        @click="() => actionHandlers.createRecord()"
+        class="btn btn-primary"
+      >
+        {{ `Create ${modelNameSingular || "Record"}` }}
+      </button>
+    </div>
+    <BaseComponentsAutosAutoTable
+      :headers="headers"
+      :api-url="apiUrl"
+      :actions="[
           { label: 'View', callback: (rec:any) => actionHandlers.viewRecord(rec) },
           { label: 'Edit', callback: (rec:any) => actionHandlers.editRecord(rec) },
           {
@@ -23,83 +26,83 @@
             callback: (rec:any) => actionHandlers.deleteRecord(rec),
           },
         ]"
-        actions-mode="dropdown"
-        @setModelDetails="setModelDetails"
-        :reloadKey="autoTableReloadKey"
-      />
-      <BaseComponentsAutosAutoActionsAllActionsModals
-        :modelID="modelID"
-        :modelNameSingular="modelNameSingular"
-        :apiEndpoint="apiUrl"
-        :fillableFields="fillable"
-        :serverModelOptions="serverModelOptions"
-        :key="fillable"
-      />
-      <BaseComponentsAutosAutoActionsAllActionsAutoPosts :modelID="modelID" />
-      <BaseComponentsAutosAutoActionsActionHandlers
-        :modelID="modelID"
-        :statuses="statuses"
-        :record="record"
-        :method="method"
-        ref="actionHandlers"
-      />
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref, watch } from "vue";
-  import { v4 as uuidv4 } from "uuid";
-  import { onMounted } from "vue";
-  import { subscribe } from "~/components/BaseComponents/utils/pubSub";
-  
-  // Generate unique modelID
-  const modelID = ref(uuidv4());
-  
-  const apiUrl = ref("/api/admin/tours/bookings");
-  
-  const headers = [
-    { key: "id", label: "ID", renderCell: (row: any) => `#${row.id}` },
-    { key: "user_id", label: "user_id" },
-    { key: "tour_id", label: "tour_id" },
-    { key: "creator_id", label: "creator_id" },
-    { key: "status_id", label: "status_id" },
-    { key: "created_at", label: "created_at" },
-  ];
-  
-  const key = ref(0);
-  const autoTableReloadKey = ref(0);
-  const modelNameSingular = ref("Tour booking");
-  const modelNamePlural = ref("Tour bookings");
-  const modelDetails = ref<any>(null);
-  const fillable = ref<any>(null);
-  const statuses = ref<any>([]);
-  const serverModelOptions = ref<any>(null);
-  const method = ref("post");
-  const record = ref<any>(null);
-  const actionHandlers = ref<any>(null);
-  
-  function setModelDetails(details: any) {
-    modelDetails.value = details;
+      actions-mode="dropdown"
+      @setModelDetails="setModelDetails"
+      :reloadKey="autoTableReloadKey"
+    />
+    <BaseComponentsAutosAutoActionsAllActionsModals
+      :modelID="modelID"
+      :modelNameSingular="modelNameSingular"
+      :apiEndpoint="apiUrl"
+      :fillableFields="fillable"
+      :serverModelOptions="serverModelOptions"
+      :key="fillable"
+    />
+    <BaseComponentsAutosAutoActionsAllActionsAutoPosts :modelID="modelID" />
+    <BaseComponentsAutosAutoActionsActionHandlers
+      :modelID="modelID"
+      :statuses="statuses"
+      :record="record"
+      :method="method"
+      ref="actionHandlers"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, watch } from "vue";
+import { v4 as uuidv4 } from "uuid";
+import { onMounted } from "vue";
+import { subscribe } from "~/components/BaseComponents/utils/pubSub";
+
+// Generate unique modelID
+const modelID = ref(uuidv4());
+
+const apiUrl = ref("/api/admin/tours/bookings");
+
+const headers = [
+  { key: "id", label: "ID", renderCell: (row: any) => `#${row.id}` },
+  { key: "user.name", label: "User" },
+  { key: "tour.name", label: "Tour" },
+  { key: "ticket.ticket_number", label: "Ticket NO" },
+  { key: "creator.name", label: "Created By" },
+  { key: "status.name", label: "Status" },
+  { key: "created_at", label: "Created At" },
+];
+
+const key = ref(0);
+const autoTableReloadKey = ref(0);
+const modelNameSingular = ref("Tour booking");
+const modelNamePlural = ref("Tour bookings");
+const modelDetails = ref<any>(null);
+const fillable = ref<any>(null);
+const statuses = ref<any>([]);
+const serverModelOptions = ref<any>(null);
+const method = ref("post");
+const record = ref<any>(null);
+const actionHandlers = ref<any>(null);
+
+function setModelDetails(details: any) {
+  modelDetails.value = details;
+}
+
+watch(modelDetails, (newDetails) => {
+  if (newDetails) {
+    fillable.value = newDetails.fillable || {};
+    modelNameSingular.value = newDetails.model_name;
+    modelNamePlural.value = newDetails.model_name_plural;
+    statuses.value = newDetails.statuses;
+    key.value = key.value + 1;
   }
-  
-  watch(modelDetails, (newDetails) => {
-    if (newDetails) {
-      fillable.value = newDetails.fillable || {};
-      modelNameSingular.value = newDetails.model_name;
-      modelNamePlural.value = newDetails.model_name_plural;
-      statuses.value = newDetails.statuses;
-      key.value = key.value + 1;
-    }
+});
+
+onMounted(() => {
+  subscribe(`${modelID.value}_refresh`, () => {
+    autoTableReloadKey.value = autoTableReloadKey.value + 1;
   });
-  
-  onMounted(() => {
-    subscribe(`${modelID.value}_refresh`, () => {
-      autoTableReloadKey.value = autoTableReloadKey.value + 1;
-    });
-  });
-  
-  definePageMeta({
-    layout: "admin",
-  });
-  </script>
-  
+});
+
+definePageMeta({
+  layout: "admin",
+});
+</script>

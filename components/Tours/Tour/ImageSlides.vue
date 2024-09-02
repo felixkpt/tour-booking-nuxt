@@ -13,7 +13,7 @@
           :class="{ active: currentSlide === index }"
         >
           <img
-            :src="image"
+            :src="image.image_path"
             :alt="`Slide ${index + 1}`"
             class="w-full max-h-96 object-cover rounded-lg mb-4"
           />
