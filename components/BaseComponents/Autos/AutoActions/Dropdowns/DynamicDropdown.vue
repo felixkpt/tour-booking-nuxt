@@ -54,7 +54,10 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (event: "inputChange", value: string | string[]): void;
+  (
+    event: "inputChange",
+    payload: { name: string; value: string | string[] }
+  ): void;
 }>();
 
 const options = ref<any[]>([]);
@@ -102,10 +105,23 @@ const fetchOptionsThrottled = throttle(async (searchTerm: string) => {
   loading.value = false;
 }, 300);
 
+function toStringValue(value: string | string[]): string | string[] {
+  if (Array.isArray(value)) {
+    return value.map((itm) => String(itm));
+  }
+  return String(value);
+}
+
 function handleSelect(value: any) {
-  return props.multiple
-    ? (selectedOption.value as string[]).includes(String(value))
-    : selectedOption.value === String(value);
+  const existingValue = props.value;
+  if (!existingValue) return false;
+
+  const stringified = toStringValue(existingValue);
+  if (props.multiple) {
+    return stringified.includes(String(value));
+  }
+
+  return stringified == String(value);
 }
 
 const handleInputChange = (event: Event) => {
@@ -125,7 +141,7 @@ const handleInputChange = (event: Event) => {
   }
 
   setTimeout(() => {
-    emit("inputChange", {name:props.name, value:newInputValue});
+    emit("inputChange", { name: props.name, value: newInputValue });
   }, 800);
 
   if (typeof newInputValue === "string" && newInputValue.trim() !== "") {
@@ -142,7 +158,7 @@ const handleChange = (event: Event) => {
   if (props.multiple) {
     newValue = Array.from(target.selectedOptions, (option) => option.value);
   } else {
-    console.log("Straight value:", target.value);
+    // console.log("Straight value:", target.value);
     newValue = target.value;
   }
 
@@ -163,7 +179,7 @@ const ensureCurrentRecordIsSelected = async () => {
     if (props.multiple && Array.isArray(props.value)) {
       const ids = props.value.map((role: any) => role.id);
       selectedOption.value = ids;
-
+      handleSelect(ids);
       delayOnChange(formatEvent(props.name, props.value));
     } else {
       // Handle single selection

@@ -42,7 +42,7 @@ export const formatEvent = (name: string, newValue: any) => {
     if (Array.isArray(newValue)) {
         formattedValue = newValue.map((item) => item.id || item);
     } else {
-        formattedValue = newValue.id;
+        formattedValue = newValue.id || newValue;
     }
 
     return {

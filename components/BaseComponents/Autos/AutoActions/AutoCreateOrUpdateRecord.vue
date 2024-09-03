@@ -232,6 +232,8 @@ const handleChange = (e: Event) => {
   const name = target.name;
   const value = target.type === "checkbox" ? target.checked : target.value;
 
+  // console.log('Sets...',name, value )
+
   formData.value = { ...formData.value, [name]: value };
   errors.value = { ...errors.value, [name]: null };
 
