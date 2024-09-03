@@ -10,13 +10,18 @@
       </div>
       <ul class="sidenav-list">
         <li v-for="item in menuItems" :key="item.title" class="sidenav-item">
-          <div class="sidenav-link" @click="toggleItem(item)">
+          <div v-if="!item.to" class="sidenav-link" @click="toggleItem(item)">
             <span class="icon">{{ item.icon }}</span>
             <span v-if="isExpanded" class="title">{{ item.title }}</span>
             <span v-if="item.children && isExpanded" class="arrow">
               {{ item.isExpanded ? "▲" : "▼" }}
             </span>
           </div>
+          <NuxtLink v-else :to="item.to" class="sidenav-link">
+            <span class="icon">{{ item.icon }}</span>
+            <span v-if="isExpanded" class="title">{{ item.title }}</span>
+          </NuxtLink>
+          
           <ul v-if="item.children && item.isExpanded" class="sidenav-sublist">
             <li
               v-for="subItem in item.children"
