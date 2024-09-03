@@ -41,6 +41,7 @@
     <BaseComponentsAutosAutoActionsAllActionsAutoPosts :modelID="modelID" />
     <BaseComponentsAutosAutoActionsActionHandlers
       :modelID="modelID"
+      :headers="headers"
       :statuses="statuses"
       :record="record"
       :method="method"

@@ -17,10 +17,10 @@ export const appConfig: Config = {
     name: 'TravelMate',
     api: {
         url: (endpoint: string): string => {
-            endpoint = endpoint.replace(/\/+/, '/')
+            endpoint = endpoint ? endpoint.replace(/\/+/, '/').replace(/^\/+/, '') : endpoint
 
             const apiUrl = be;
-            return `${apiUrl.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
+            return `${apiUrl.replace(/\/+$/, '')}/${endpoint}`;
         }
     },
     uuid: () => uuidv4()

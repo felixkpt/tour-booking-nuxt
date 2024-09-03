@@ -4,7 +4,7 @@ import { resolve } from 'path'
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'Nuxt',
+      title: 'TravelMate',
       meta: [
         { name: 'description', content: 'Everything about - Nuxt-3' }
       ],

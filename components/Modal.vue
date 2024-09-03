@@ -1,9 +1,9 @@
 <template>
   <div
     v-if="show"
-    class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50"
+    class="fixed inset-0 bg-gray-500 bg-opacity-50 dark:bg-opacity-20 flex items-center justify-center z-50"
   >
-    <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+    <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg max-w-sm w-full">
       <header class="flex justify-between items-center mb-4">
         <h3 class="text-lg font-bold">{{ title }}</h3>
         <button
@@ -27,7 +27,7 @@
             type="number"
             id="max-slots"
             min="1"
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:text-gray-200 dark:bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
       </main>
