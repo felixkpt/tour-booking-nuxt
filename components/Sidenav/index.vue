@@ -48,7 +48,7 @@ const menuItems = ref([
   {
     title: "Dashboard",
     icon: "🏠",
-    to: "/", // Link for the main item
+    to: "/admin", // Link for the main item
     isExpanded: false,
   },
   {
