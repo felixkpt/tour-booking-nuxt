@@ -102,7 +102,11 @@ const fetchOptionsThrottled = throttle(async (searchTerm: string) => {
   loading.value = false;
 }, 300);
 
-function handleSelect(newVal: any) {}
+function handleSelect(value: any) {
+  return props.multiple
+    ? (selectedOption.value as string[]).includes(String(value))
+    : selectedOption.value === String(value);
+}
 
 const handleInputChange = (event: Event) => {
   if (!event.isTrusted) return; // Ensure the event is trusted
@@ -121,7 +125,7 @@ const handleInputChange = (event: Event) => {
   }
 
   setTimeout(() => {
-    // emit("inputChange", newInputValue);
+    emit("inputChange", {name:props.name, value:newInputValue});
   }, 800);
 
   if (typeof newInputValue === "string" && newInputValue.trim() !== "") {

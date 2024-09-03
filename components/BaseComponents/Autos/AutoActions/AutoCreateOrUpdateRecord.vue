@@ -214,6 +214,7 @@ interface InputChangePayload {
 }
 
 const handleInputChange = (payload: InputChangePayload) => {
+  console.log('PAYYYY', payload)
   if (formData.value) {
     formData.value = { ...formData.value, [payload.name]: payload.value };
   }
