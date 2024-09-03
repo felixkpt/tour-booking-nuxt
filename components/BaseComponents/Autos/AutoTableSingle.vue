@@ -21,10 +21,22 @@ const actionHeader = computed(
     props.headers.find((header) => header.key === "action")
 );
 
+function getDynamicValue(row: any, path: string) {
+  if (!path.match(/\./)) {
+    const val = row[path];
+    return String(val);
+  } else {
+    return path.split(".").reduce((acc, prop) => acc && acc[prop], row);
+  }
+}
+
 </script>
 
 <template>
-  <div :id="tableComponentId" class="autotableWrapper p-4 dark:bg-dark-primary bg-light-primary">
+  <div
+    :id="tableComponentId"
+    class="autotableWrapper p-4 dark:bg-dark-primary bg-light-primary"
+  >
     <table class="table-auto w-full border-collapse">
       <!-- Display the action header if it exists and is not from AutoView -->
       <thead v-if="actionHeader">
@@ -33,7 +45,9 @@ const actionHeader = computed(
             :class="`${tableComponentId} data-${actionHeader.key} p-2 border-b dark:border-dark-border-default border-light-border-default text-right`"
             colspan="2"
           >
-            <div class="w-full flex justify-end dark:text-dark-text text-light-text">
+            <div
+              class="w-full flex justify-end dark:text-dark-text text-light-text"
+            >
               {{ props.record && props.record[actionHeader.key] }}
             </div>
           </td>
@@ -43,16 +57,25 @@ const actionHeader = computed(
       <!-- Display the table body -->
       <tbody>
         <tr
-          v-for="(column, index) in (props.headers ? props.headers : []).filter(header => header.key !== 'action')"
+          v-for="(header, index) in (props.headers ? props.headers : []).filter(
+            (header) => header.key !== 'action'
+          )"
           :key="index"
-          :class="`${tableComponentId} row-${column.key} dark:text-dark-text text-light-text`"
+          :class="`${tableComponentId} row-${header.key} dark:text-dark-text text-light-text`"
         >
-          <td :class="`${tableComponentId} heading-${column.key} p-2 border-b dark:border-dark-border-default border-light-border-default`">
-            {{ column.label || column.key }}
+          <td
+            :class="`${tableComponentId} heading-${header.key} p-2 border-b dark:border-dark-border-default border-light-border-default`"
+          >
+            {{ header.label || header.key }}
           </td>
-          <td :class="`${tableComponentId} data-${column.key} p-2 border-b dark:border-dark-border-default border-light-border-default font-semibold`">
-            <span v-if="column.renderCell" v-html="column.renderCell(props.record, column.key)"></span>
-            <span v-else>{{ props.record && props.record[column.key] }}</span>
+          <td
+            :class="`${tableComponentId} data-${header.key} p-2 border-b dark:border-dark-border-default border-light-border-default font-semibold`"
+          >
+            <span
+              v-if="header.renderCell"
+              v-html="header.renderCell(record, header.key)"
+            ></span>
+            <span v-else>{{ getDynamicValue(record, header.key) }}</span>
           </td>
         </tr>
       </tbody>
