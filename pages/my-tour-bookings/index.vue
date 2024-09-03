@@ -66,7 +66,6 @@
         Next
       </button>
     </div>
-    <AuthUser :isRequired="true" />
   </div>
 </template>
 

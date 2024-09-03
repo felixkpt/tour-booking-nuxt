@@ -30,7 +30,7 @@ const fetchUser = async () => {
 
     // Update user with new data and token
     authUser.value = {
-      ...response.data.results,
+      ...response.data.results, token:authUser.value.token
     };
 
     // Store updated authUser data in localStorage
@@ -56,9 +56,7 @@ onMounted(async () => {
   const storedUser = localStorage.getItem("authUser");
   if (storedUser) {
     authUser.value = JSON.parse(storedUser);
-    setTimeout(async () => {
-      await fetchUser();
-    }, 500);
+    await fetchUser();
   } else if (props.isRequired) {
     router.push("/login"); // No stored user
   }

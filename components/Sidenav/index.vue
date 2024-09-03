@@ -56,7 +56,7 @@ const menuItems = ref([
     icon: "🌍",
     isExpanded: false,
     children: [
-      { title: "Desinations", to: "/admin/destinations" },
+      { title: "Destinations", to: "/admin/destinations" },
       { title: "Tours", to: "/admin/tours" },
       { title: "Bookings", to: "/admin/tours/bookings" },
       { title: "Tickets", to: "/admin/tours/tickets" },

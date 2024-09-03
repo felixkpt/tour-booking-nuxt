@@ -54,7 +54,7 @@ const totalPages = ref(1);
 const searchQuery = ref("");
 const loading = ref(true); // loading state
 const authUser = useAuthUser();
-const token = ref(authUser.value?.token);
+const token = ref(null);
 
 // Function to fetch tours
 const fetchTours = async (page: number = 1, search: string = "") => {
@@ -64,7 +64,7 @@ const fetchTours = async (page: number = 1, search: string = "") => {
     const config = {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : {},
       "Content-Type": "application/json",
-      "Accept": "application/json",
+      Accept: "application/json",
     };
 
     const response = await axios.get(
@@ -85,20 +85,13 @@ const fetchTours = async (page: number = 1, search: string = "") => {
 
 // Watch for changes in the token and fetch data when it changes
 watch(
-  () => authUser?.value,
-  (newUser) => {
-    token.value = newUser?.token;
+  () => authUser.value?.token,
+  (newToken) => {
+    token.value = newToken;
     fetchTours();
   },
-  { immediate: true }
+  { immediate: true } // Fetch data immediately if token is available
 );
-
-// Fetch data when component is mounted if token is already available
-onMounted(() => {
-  if (token?.value) {
-    fetchTours();
-  }
-});
 
 // Function to fetch page data
 function fetchPage(page: number) {
