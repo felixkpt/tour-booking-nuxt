@@ -51,10 +51,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { h, ref, watch } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { onMounted } from "vue";
 import { subscribe } from "~/components/BaseComponents/utils/pubSub";
+import HtmlFormatters from "~/composables/HtmlFormatters";
 
 // Generate unique modelID
 const modelID = ref(uuidv4());
@@ -63,8 +64,12 @@ const apiUrl = ref("/api/admin/destinations");
 
 const headers = [
   { key: "id", label: "ID", renderCell: (row: any) => `#${row.id}` },
+  {
+    key: "featured_image",
+    label: "Image",
+    renderCell: (row: any) => HtmlFormatters.thumbNail(row["featured_image"]),
+  },
   { key: "name", label: "Name" },
-  { key: "featured_image", label: "featured_image" },
   { key: "description", label: "description" },
   { key: "creator.name", label: "Created By" },
   { key: "status.name", label: "Status" },

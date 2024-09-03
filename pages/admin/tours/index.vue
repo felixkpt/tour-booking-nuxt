@@ -56,6 +56,7 @@ import { ref, watch } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { onMounted } from "vue";
 import { subscribe } from "~/components/BaseComponents/utils/pubSub";
+import HtmlFormatters from "~/composables/HtmlFormatters";
 
 // Generate unique modelID
 const modelID = ref(uuidv4());
@@ -66,12 +67,7 @@ const headers = [
   {
     key: "featured_image",
     label: "Image",
-    renderCell: (row: any) => `
-    <span class="block overflow-hidden rounded shadow w-[40px] h-[40px]">
-      <img src="${
-        row.featured_image || "-"
-      }" alt="Featured Image" class="w-full h-full object-cover" />
-    </span>`,
+    renderCell: (row: any) => HtmlFormatters.thumbNail(row["featured_image"]),
   },
   { key: "name", label: "Name" },
 

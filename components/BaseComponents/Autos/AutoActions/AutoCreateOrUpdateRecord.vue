@@ -57,18 +57,24 @@
                 { 'border-red-700': errors[name] },
               ]"
             />
-            <input
-              v-if="field.input === 'input' && field.type === 'file'"
-              :type="field.type"
-              :id="name"
-              :name="name"
-              @change="handleChangeFile"
-              aria-label="field.label"
-              :class="[
-                'shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200',
-                { 'border-red-700': errors[name] },
-              ]"
-            />
+            <div v-if="field.input === 'input' && field.type === 'file'">
+              <input
+                :type="field.type"
+                :id="name"
+                :name="name"
+                @change="handleChangeFile"
+                aria-label="field.label"
+                :class="[
+                  'shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200',
+                  { 'border-red-700': errors[name] },
+                ]"
+              />
+              <div
+                v-if="formData[name] && record"
+                v-html="HtmlFormatters.thumbNail(formData[name], name)"
+                class="my-2"
+              ></div>
+            </div>
             <input
               v-if="field.input === 'input' && field.type === 'datetime-local'"
               :type="`text`"
@@ -159,6 +165,7 @@ import { formatErrors } from "../../utils/formatErrors";
 import type { HttpVerb, ServerModelOptionType } from "~/types";
 import type { FillableType } from "../BaseAutoModel/types";
 import { useRoute } from "vue-router";
+import HtmlFormatters from "../../../../composables/HtmlFormatters";
 
 const props = defineProps({
   modelID: String,
@@ -214,7 +221,6 @@ interface InputChangePayload {
 }
 
 const handleInputChange = (payload: InputChangePayload) => {
-  console.log('PAYYYY', payload)
   if (formData.value) {
     formData.value = { ...formData.value, [payload.name]: payload.value };
   }

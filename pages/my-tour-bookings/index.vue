@@ -1,11 +1,22 @@
 <template>
   <div class="mt-3 mx-auto px-3 max-w-7xl">
     <h3 class="text-gray-500 dark:text-gray-300 font-bold text-2xl">
-      My Tour bookings
+      My Tour Bookings
     </h3>
 
+    <!-- Loading State -->
+    <div v-if="loading" class="flex justify-center p-4">
+      <p class="text-lg text-gray-600 dark:text-gray-300">Loading...</p>
+    </div>
+    
+    <!-- No Bookings Message -->
+    <div v-if="!loading && bookings.length === 0" class="flex flex-col items-center justify-center p-4 text-center">
+      <p class="text-lg font-semibold text-gray-600 dark:text-gray-300">No bookings available</p>
+      <p class="text-sm text-gray-500 dark:text-gray-400">There are currently no bookings to display. Please check back later.</p>
+    </div>
+
     <!-- Booking Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-6 mt-4">
+    <div v-if="!loading && bookings.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-6 mt-4">
       <div
         v-for="booking in bookings"
         :key="booking.id"
@@ -38,7 +49,7 @@
     </div>
 
     <!-- Pagination Controls -->
-    <div class="flex justify-center">
+    <div v-if="!loading && bookings.length > 0" class="flex justify-center">
       <button
         @click="fetchData(currentPage - 1)"
         :disabled="currentPage <= 1"
@@ -72,6 +83,7 @@ const bookings = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
 const pageSize = 15;
+const loading = ref(true);
 
 const fetchData = async (page: number) => {
   if (!token.value) {
@@ -81,6 +93,7 @@ const fetchData = async (page: number) => {
 
   if (page < 1 || page > totalPages.value) return;
   currentPage.value = page;
+  loading.value = true;
 
   try {
     const response = await fetch(
@@ -100,6 +113,8 @@ const fetchData = async (page: number) => {
     totalPages.value = results.last_page;
   } catch (error) {
     console.error("Error fetching bookings:", error);
+  } finally {
+    loading.value = false;
   }
 };
 
