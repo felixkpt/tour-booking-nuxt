@@ -65,6 +65,7 @@ const headers = [
   { key: "id", label: "ID", renderCell: (row: any) => `#${row.id}` },
   { key: "user.name", label: "User" },
   { key: "tour.name", label: "Tour" },
+  { key: "slots", label: "Slots" },
   { key: "ticket.ticket_number", label: "Ticket NO" },
   { key: "creator.name", label: "Created By" },
   { key: "status.name", label: "Status" },

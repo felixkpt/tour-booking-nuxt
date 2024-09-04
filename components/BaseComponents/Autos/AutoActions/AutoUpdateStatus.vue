@@ -50,7 +50,7 @@ const handleResponse = ({ status, data, error }: any) => {
       publish(`${props.modelID}_closeModal`, {});
     }, 400);
   } else {
-    responseMessage.value = "Error updating record";
+    responseMessage.value = error?.message || "Error updating record";
   }
 };
 
