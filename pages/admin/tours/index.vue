@@ -30,6 +30,7 @@
       @setModelDetails="setModelDetails"
       :reloadKey="autoTableReloadKey"
     />
+
     <BaseComponentsAutosAutoActionsAllActionsModals
       :modelID="modelID"
       :modelNameSingular="modelNameSingular"
@@ -41,6 +42,7 @@
     <BaseComponentsAutosAutoActionsAllActionsAutoPosts :modelID="modelID" />
     <BaseComponentsAutosAutoActionsActionHandlers
       :modelID="modelID"
+      :headers="headers"
       :statuses="statuses"
       :record="record"
       :method="method"
@@ -54,6 +56,7 @@ import { ref, watch } from "vue";
 import { v4 as uuidv4 } from "uuid";
 import { onMounted } from "vue";
 import { subscribe } from "~/components/BaseComponents/utils/pubSub";
+import HtmlFormatters from "~/composables/HtmlFormatters";
 
 // Generate unique modelID
 const modelID = ref(uuidv4());
@@ -61,10 +64,14 @@ const modelID = ref(uuidv4());
 const apiUrl = ref("/api/admin/tours");
 const headers = [
   { key: "id", label: "ID", renderCell: (row: any) => `#${row.id}` },
+  {
+    key: "featured_image",
+    label: "Image",
+    renderCell: (row: any) => HtmlFormatters.thumbNail(row["featured_image"]),
+  },
   { key: "name", label: "Name" },
-  { key: "featured_image", label: "featured_image" },
+
   { key: "destination.name", label: "Destination" },
-  { key: "description", label: "description" },
   { key: "price", label: "price" },
   { key: "slots", label: "slots" },
   { key: "creator.name", label: "Created By" },

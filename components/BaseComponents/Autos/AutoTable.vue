@@ -18,7 +18,7 @@
         @input="handleSearch"
         type="text"
         placeholder="Search..."
-        class="w-full px-3 py-2 border bg-light-primary dark:bg-dark-primary border-light-border rounded-md text-light-text dark:text-light-primary-subtle focus:outline-none focus:border-light-secondary focus:ring-1 focus:ring-light-info"
+        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 dark:text-gray-100 rounded dark:bg-light-text focus:outline-none focus:border-light-secondary focus:ring-1 focus:ring-light-info"
       />
     </div>
     <table class="w-full border-collapse mb-5">
@@ -70,7 +70,7 @@
             >
               <button
                 @click="toggleDropdown(index)"
-                class="bg-light-secondary text-light-text dark:text-dark-text px-3 py-2 border border-light-border rounded-md focus:outline-none"
+                class="bg-light-secondary text-light-text dark:text-dark-text px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
               >
                 Actions
               </button>
@@ -128,7 +128,7 @@
 import { ref, computed, watch, onMounted, defineProps, defineEmits } from "vue";
 import axios from "axios";
 import { appConfig } from "~/utils/helpers";
-import { useUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/user";
 
 import _ from "lodash";
 const { debounce } = _;
@@ -191,12 +191,12 @@ const fetchData = async () => {
   loading.value = true;
 
   try {
-    const user = useUser();
+    const authUser = useAuthUser();
     const config = {};
 
-    if (user.value?.token) {
+    if (authUser.value?.token) {
       config.headers = {
-        Authorization: `Bearer ${user.value.token}`,
+        Authorization: `Bearer ${authUser.value.token}`,
       };
     }
 
@@ -255,13 +255,12 @@ const handleSearch = () => {
 };
 
 function getDynamicValue(row: any, path: string) {
-
-if (!path.match(/\./)) {
-    const val = row[path]
+  if (!path.match(/\./)) {
+    const val = row[path];
     return String(val);
-} else {
-    return path.split('.').reduce((acc, prop) => acc && acc[prop], row);
-}
+  } else {
+    return path.split(".").reduce((acc, prop) => acc && acc[prop], row);
+  }
 }
 
 const prevPage = () => {
@@ -283,7 +282,11 @@ watch(currentPage, () => fetchData());
 watch(searchQuery, () => {
   debouncedFetchData();
 });
-onMounted(() => fetchData());
+onMounted(() =>
+  setTimeout(() => {
+    fetchData();
+  }, 450)
+);
 
 // Watch for changes in reloadKey
 watch(

@@ -4,7 +4,7 @@ import { resolve } from 'path'
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'Nuxt',
+      title: 'TravelMate',
       meta: [
         { name: 'description', content: 'Everything about - Nuxt-3' }
       ],
@@ -36,5 +36,16 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: '2024-08-30',
+  compatibilityDate: '2024-09-02',
+  
+  runtimeConfig: {
+    // Private keys are only available server-side
+    apiSecret: '123',
+
+    // Public keys that are exposed to the client
+    public: {
+      apiBase: '/api'
+    }
+  }
+
 })

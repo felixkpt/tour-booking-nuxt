@@ -6,6 +6,7 @@ import { publish } from "~/components/BaseComponents/utils/pubSub";
 // Props definition
 const props = defineProps<{
   modelID: string;
+  headers: string[];
   statuses: any[];
   record: any;
   method: string;
@@ -13,7 +14,7 @@ const props = defineProps<{
 
 // Actions
 const viewRecord = async (rec: any) => {
-  publish(`${props.modelID}_View`, { record: rec });
+  publish(`${props.modelID}_View`, { record: rec, headers: props.headers });
 };
 
 const createRecord = async (rec: any) => {

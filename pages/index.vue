@@ -24,7 +24,7 @@
     </div>
 
     <ToursList
-      :key="currentPage"
+      :key="results"
       :results="results"
       :title="title"
       :description="description"
@@ -39,8 +39,10 @@
 <script setup lang="ts">
 import { ref, type Ref, watch, onMounted } from "vue";
 import axios from "axios";
-import { debounce } from "lodash";
 import { appConfig } from "~/utils/helpers";
+import _ from "lodash";
+const { debounce } = _;
+import { useAuthUser } from "~/composables/user";
 
 const results: Ref<any[]> = ref([]);
 const title = "TravelMate - Discover Your Next Adventure";
@@ -50,14 +52,19 @@ const perPage = ref(9);
 const currentPage = ref(1);
 const totalPages = ref(1);
 const searchQuery = ref("");
-const loading = ref(false); // loading state
+const loading = ref(true); // loading state
+const authUser = useAuthUser();
+const token = ref(null);
 
 // Function to fetch tours
 const fetchTours = async (page: number = 1, search: string = "") => {
   loading.value = true; // Set loading to true before fetching
+
   try {
     const config = {
       headers: token.value ? { Authorization: `Bearer ${token.value}` } : {},
+      "Content-Type": "application/json",
+      Accept: "application/json",
     };
 
     const response = await axios.get(
@@ -78,22 +85,13 @@ const fetchTours = async (page: number = 1, search: string = "") => {
 
 // Watch for changes in the token and fetch data when it changes
 watch(
-  () => user.value?.token,
+  () => authUser.value?.token,
   (newToken) => {
     token.value = newToken;
-    if (newToken) {
-      fetchTours();
-    }
-  },
-  { immediate: true }
-);
-
-// Fetch data when component is mounted if token is already available
-onMounted(() => {
-  if (token.value) {
     fetchTours();
-  }
-});
+  },
+  { immediate: true } // Fetch data immediately if token is available
+);
 
 // Function to fetch page data
 function fetchPage(page: number) {

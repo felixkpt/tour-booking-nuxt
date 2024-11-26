@@ -8,8 +8,7 @@
     <h2 class="text-lg text-light-text font-semibold mb-2 dark:text-dark-text">
       {{ tour.name }}
     </h2>
-    <p class="text-light-text mb-2 dark:text-dark-text">
-      {{ tour.description }}
+    <p class="text-light-text mb-2 dark:text-dark-text" v-html="tour.description">
     </p>
     <p class="text-light-text font-bold dark:text-dark-text">
       Price: ${{ tour.price }}

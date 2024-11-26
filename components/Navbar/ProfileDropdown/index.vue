@@ -4,8 +4,8 @@
     <div class="relative" @click="$emit('toggleDropdown')">
       <button class="flex items-center focus:outline-none">
         <img
-          v-if="user && user.avatar"
-          :src="user.avatar"
+          v-if="authUser && authUser.avatar"
+          :src="authUser.avatar"
           alt="User Avatar"
           class="h-10 w-10 rounded-full border border-light-primary-subtle dark:border-dark-primary-subtle"
         />
@@ -37,14 +37,14 @@
         class="absolute right-0 mt-2 w-48 bg-light-primary border border-light-primary-subtle rounded shadow-lg py-1 z-20 dark:bg-dark-primary dark:border-dark-primary-subtle"
       >
         <a
-          v-if="user"
+          v-if="authUser"
           href="/my-tour-bookings"
           class="block px-4 py-2 text-light-text hover:bg-light-primary-subtle dark:text-dark-text dark:hover:bg-dark-primary-subtle"
         >
           My tours
         </a>
         <a
-          v-if="user"
+          v-if="authUser"
           href="#"
           @click.prevent="handleLogout"
           class="block px-4 py-2 text-light-text hover:bg-light-primary-subtle dark:text-dark-text dark:hover:bg-dark-primary-subtle"
@@ -65,7 +65,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/user";
 
 export default defineComponent({
   props: {
@@ -75,16 +75,16 @@ export default defineComponent({
     },
   },
   setup() {
-    const user = useUser();
-    // Handle user logout
+    const authUser = useAuthUser();
+    // Handle authUser logout
     const handleLogout = () => {
-      localStorage.removeItem("user");
-      user.value = null;
+      localStorage.removeItem("authUser");
+      authUser.value = null;
       window.location.href = "/";
     };
 
     return {
-      user,
+      authUser,
       handleLogout,
     };
   },

@@ -10,14 +10,17 @@ interface Config {
     uuid: () => string;
 }
 
+var be =  'https://tour-booking-laravel-sandbox-830880690332.us-central1.run.app'
+var be =  'http://tour-booking-be.local'
+
 export const appConfig: Config = {
     name: 'TravelMate',
     api: {
         url: (endpoint: string): string => {
-            endpoint = endpoint.replace(/\/+/, '/')
+            endpoint = endpoint ? endpoint.replace(/\/+/, '/').replace(/^\/+/, '') : endpoint
 
-            const apiUrl = 'http://tour-booking-be.local';
-            return `${apiUrl.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
+            const apiUrl = be;
+            return `${apiUrl.replace(/\/+$/, '')}/${endpoint}`;
         }
     },
     uuid: () => uuidv4()
@@ -34,12 +37,12 @@ export function getModelTag(apiEndpoint: string) {
 }
 
 export const formatEvent = (name: string, newValue: any) => {
-    let formattedValue;
+    let formattedValue: any[];
 
     if (Array.isArray(newValue)) {
         formattedValue = newValue.map((item) => item.id || item);
     } else {
-        formattedValue = newValue.id;
+        formattedValue = newValue.id || newValue;
     }
 
     return {

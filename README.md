@@ -1,75 +1,63 @@
-# Nuxt 3 Minimal Starter
+### Frontend README (Vue.js/Nuxt.js)
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Tour Booking App - Frontend
 
-## Setup
+This is the frontend for the Tour Booking application built using **Nuxt.js** and **Vue.js**.
 
-Make sure to install the dependencies:
+### Functionality Overview
 
-```bash
-# npm
-npm install
+- **Home Page**: View available tours and browse the list.
+- **Tour Booking**: Select a tour and proceed with the booking process.
+- **Ticket Generation**: Once a booking is completed, view the generated ticket.
 
-# pnpm
-pnpm install
+### Admin Features
 
-# yarn
-yarn install
+- **Tour Management**: Admins can add, edit, or delete tours.
+- **Booking Management**: Admins can view all user bookings.
+- **Ticket Management**: Admins can access all generated tickets.
+- **User Management**: Admins can manage user roles and permissions (Visit `/admin` to see admin links).
 
-# bun
-bun install
-```
+### State Management
 
-## Development Server
+We use the `useState()` hook from Nuxt for efficient state management across the application.
 
-Start the development server on `http://localhost:3000`:
+### API Integration
 
-```bash
-# npm
-npm run dev
+The frontend communicates with the backend APIs using **Axios** for most requests, and **fetch()** in some cases to leverage Nuxt’s built-in caching.
 
-# pnpm
-pnpm run dev
+### Installation
 
-# yarn
-yarn dev
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/felixkpt/tour-booking-nuxt.git
+   cd tour-booking-nuxt
+   ```
 
-# bun
-bun run dev
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Production
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-Build the application for production:
+### Project Structure
 
-```bash
-# npm
-npm run build
+- **pages/**: Nuxt pages like Home, Tours, Admin.
+- **components/**: Reusable components such as tour cards, booking forms.
+- **store/**: Vuex store for state management.
 
-# pnpm
-pnpm run build
+### Deployment
 
-# yarn
-yarn build
+Deployed on **Google Cloud Platform** for both frontend and backend.
 
-# bun
-bun run build
-```
+---
 
-Locally preview production build:
+The project uses **GitHub** for version control. Below are the repo links:
 
-```bash
-# npm
-npm run preview
+- [Frontend Repo](https://github.com/felixkpt/tour-booking-nuxt)
+- [Backend Repo](https://github.com/felixkpt/tour-booking-laravel)
 
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+---

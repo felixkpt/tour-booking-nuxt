@@ -3,7 +3,6 @@
     <select
       :id="props.name"
       :name="`${props.name}${props.multiple ? '[]' : ''}`"
-      v-model="selectedOption"
       @change="handleChange"
       @input="handleInputChange"
       :class="{ 'border-red-700': errors[props.name] }"
@@ -11,11 +10,18 @@
       :multiple="props.multiple"
       aria-label="Field label"
     >
-      <option v-for="option in options" :key="option.id" :value="option.id">
+      <option
+        v-for="option in options"
+        :key="option.id"
+        :value="option.id"
+        :selected="handleSelect(option.id)"
+      >
         {{
           option.name ||
           `#${option.id}${
-            option?.created_at ? " (" + FormatDate.toLocaleDateString(option.created_at) + ")" : ""
+            option?.created_at
+              ? " (" + FormatDate.toLocaleDateString(option.created_at) + ")"
+              : ""
           }`
         }}
       </option>
@@ -32,7 +38,7 @@ import fetchOptions from "~/utils/fetchOptions";
 import throttle from "~/utils/throttle";
 import { formatEvent } from "~/utils/helpers";
 import FormatDate from "~/utils/FormatDate";
-import { useUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/user";
 import type { ServerModelOptionType } from "~/types";
 
 const props = defineProps<{
@@ -48,7 +54,10 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (event: "inputChange", value: string | string[]): void;
+  (
+    event: "inputChange",
+    payload: { name: string; value: string | string[] }
+  ): void;
 }>();
 
 const options = ref<any[]>([]);
@@ -60,8 +69,8 @@ const ensuredRecord = ref<string | undefined>();
 const timeoutRef = ref<number | null>(null);
 const errors = ref<Record<string, string>>({});
 
-const user = useUser();
-const token = user.value?.token;
+const authUser = useAuthUser();
+const token = authUser.value?.token;
 
 const setInitialRecords = async () => {
   loading.value = true;
@@ -96,6 +105,25 @@ const fetchOptionsThrottled = throttle(async (searchTerm: string) => {
   loading.value = false;
 }, 300);
 
+function toStringValue(value: string | string[]): string | string[] {
+  if (Array.isArray(value)) {
+    return value.map((itm) => String(itm));
+  }
+  return String(value);
+}
+
+function handleSelect(value: any) {
+  const existingValue = props.value;
+  if (!existingValue) return false;
+
+  const stringified = toStringValue(existingValue);
+  if (props.multiple) {
+    return stringified.includes(String(value));
+  }
+
+  return stringified == String(value);
+}
+
 const handleInputChange = (event: Event) => {
   if (!event.isTrusted) return; // Ensure the event is trusted
 
@@ -113,7 +141,7 @@ const handleInputChange = (event: Event) => {
   }
 
   setTimeout(() => {
-    // emit("inputChange", newInputValue);
+    emit("inputChange", { name: props.name, value: newInputValue });
   }, 800);
 
   if (typeof newInputValue === "string" && newInputValue.trim() !== "") {
@@ -130,7 +158,7 @@ const handleChange = (event: Event) => {
   if (props.multiple) {
     newValue = Array.from(target.selectedOptions, (option) => option.value);
   } else {
-    // console.log("Straight value:",target.value)
+    // console.log("Straight value:", target.value);
     newValue = target.value;
   }
 
@@ -151,7 +179,7 @@ const ensureCurrentRecordIsSelected = async () => {
     if (props.multiple && Array.isArray(props.value)) {
       const ids = props.value.map((role: any) => role.id);
       selectedOption.value = ids;
-
+      handleSelect(ids);
       delayOnChange(formatEvent(props.name, props.value));
     } else {
       // Handle single selection
