@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ToursTour :key="tour" :tour="tour" @bookTour="showConfirmModal" />
+    <DestinationsView :key="destination" :destination="destination" @bookTour="showConfirmModal" />
 
     <!-- Confirmation Modal -->
     <Modal
@@ -10,8 +10,11 @@
       confirmButtonText="Book Now"
       apiEndpoint="/api/tours/bookings"
       actionMethod="POST"
-      :token="token"
-      :bodyData="{ tour_id: tourId, maxSlots: tour?.slots, slots: 1 }"
+      :bodyData="{
+        tour_id: destinationId,
+        maxSlots: destination?.slots,
+        slots: 1,
+      }"
       @close="showModal = false"
       @doneBooking="handleBooking"
     >
@@ -31,14 +34,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import { useAuthUser } from "~/composables/user";
 import type { TourType } from "~/types/tours";
-import { appConfig } from "~/utils/helpers";
+import { useApi } from "../../../../composables/useApi";
 
 // State to hold the tour data
-const tour = ref<TourType | null>(null);
+const destination = ref<TourType | null>(null);
 
 // State for modal visibility and booking indicator
 const showModal = ref(false);
@@ -46,38 +48,28 @@ const isBooking = ref(false);
 
 // Get the route parameter
 const route = useRoute();
-const tourId = route.params.id;
+const destinationId = route.params.id;
 
-// Get user token
-const authUser = useAuthUser();
-const token = ref(authUser.value?.token); // Make token reactive
 
-// Function to fetch the tour data from the backend
+const { get } = useApi();
+interface TourApiResponse {
+  results: TourType;
+  [key: string]: any;
+}
+
 const fetchTour = async () => {
   try {
-    const config = {
-      headers: token.value ? { Authorization: `Bearer ${token.value}` } : {},
-    };
-    const response = await fetch(
-      appConfig.api.url(`/api/tours/view/${tourId}`),
-      config
-    );
-    const data = await response.json();
-    tour.value = data?.results;
+    const response = await get(`/api/destinations/view/${destinationId}`);
+    const res = await response as TourApiResponse;
+    destination.value = res?.results;
   } catch (error) {
-    console.error("Failed to fetch tour:", error);
+    console.error("Failed to fetch destination:", error);
   }
 };
 
-// Watch for changes in the token and fetch data when it changes
-watch(
-  () => authUser.value?.token,
-  (newToken) => {
-    token.value = newToken;
-    fetchTour();
-  },
-  { immediate: true } // Fetch data immediately if token is available
-);
+onMounted(async () => {
+  fetchTour();
+});
 
 // Show confirmation modal
 const showConfirmModal = () => {
@@ -87,6 +79,6 @@ const showConfirmModal = () => {
 // Handle booking
 const handleBooking = async () => {
   showModal.value = false;
-  fetchTour()
+  fetchTour();
 };
 </script>

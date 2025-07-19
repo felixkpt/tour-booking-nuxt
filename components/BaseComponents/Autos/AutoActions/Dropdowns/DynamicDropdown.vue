@@ -38,7 +38,7 @@ import fetchOptions from "~/utils/fetchOptions";
 import throttle from "~/utils/throttle";
 import { formatEvent } from "~/utils/helpers";
 import FormatDate from "~/utils/FormatDate";
-import { useAuthUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/useAuthUser";
 import type { ServerModelOptionType } from "~/types";
 
 const props = defineProps<{

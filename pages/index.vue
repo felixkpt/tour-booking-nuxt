@@ -23,9 +23,9 @@
       />
     </div>
 
-    <ToursList
-      :key="results"
-      :results="results"
+    <DestinationsList
+      :key="data"
+      :data="data"
       :title="title"
       :description="description"
       :fetchPage="fetchPage"
@@ -37,14 +37,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref, watch, onMounted } from "vue";
-import axios from "axios";
-import { appConfig } from "~/utils/helpers";
+import { ref, type Ref, watch } from "vue";
 import _ from "lodash";
 const { debounce } = _;
-import { useAuthUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/useAuthUser";
+import { useApi } from "../composables/useApi";
 
-const results: Ref<any[]> = ref([]);
+const data: Ref<any[]> = ref([]);
 const title = "TravelMate - Discover Your Next Adventure";
 const description =
   "TravelMate offers a wide range of tours to exciting destinations. Explore our available tours, view detailed information, and book your next adventure with ease.";
@@ -56,6 +55,8 @@ const loading = ref(true); // loading state
 const authUser = useAuthUser();
 const token = ref(null);
 
+const { get } = useApi();
+
 // Function to fetch tours
 const fetchTours = async (page: number = 1, search: string = "") => {
   loading.value = true; // Set loading to true before fetching
@@ -66,15 +67,11 @@ const fetchTours = async (page: number = 1, search: string = "") => {
       "Content-Type": "application/json",
       Accept: "application/json",
     };
+    const response = await get(`/api/destinations?page=${page}&search=${search}&per_page=${perPage.value}`);
+    const res = (await response) as TourApiResponse;
 
-    const response = await axios.get(
-      appConfig.api.url(
-        `/api/tours?page=${page}&search=${search}&per_page=${perPage.value}`
-      ),
-      config
-    );
-    results.value = response.data.results;
-    totalPages.value = response.data.results.last_page;
+    data.value = res.results.data;
+    totalPages.value = res.results.last_page;
     currentPage.value = page;
   } catch (error) {
     console.error("Error fetching tours:", error);

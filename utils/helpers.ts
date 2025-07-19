@@ -11,7 +11,7 @@ interface Config {
 }
 
 var be =  'https://tour-booking-laravel-sandbox-830880690332.us-central1.run.app'
-var be =  'http://tour-booking-be.local'
+var be =  'http://127.0.0.1:8000'
 
 export const appConfig: Config = {
     name: 'TravelMate',

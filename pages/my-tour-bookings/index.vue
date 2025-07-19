@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { useAuthUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/useAuthUser";
 import FormatDate from "~/utils/FormatDate";
 import { appConfig } from "~/utils/helpers";
 

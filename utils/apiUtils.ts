@@ -1,15 +1,34 @@
 import axios from 'axios';
+import { appConfig } from "~/utils/helpers";
+import { useAuthUser } from '../composables/useAuthUser';
+
+const BASE_URL = appConfig.api.url('');
+
+const headers = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+}
+// Get user token
+let authUser: any;
+const storedUser = localStorage.getItem("authUser");
+if (storedUser) {
+  authUser = JSON.parse(storedUser);
+}
+const token = authUser?.token
+
+if (token) {
+  headers['Authorization'] = `Bearer ${token.value}`
+}
 
 // Base instance configuration
 const apiClient = axios.create({
-  baseURL: 'http://tour-booking-be.local',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: BASE_URL,
+  headers,
 });
 
+
 // Function to handle GET requests
-export const fetchData = async (url: string, params?: any) => {
+export const getData = async (url: string, params?: any) => {
   try {
     const response = await apiClient.get(url, { params });
     return response.data;

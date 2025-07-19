@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { appConfig } from "~/utils/helpers";
-import { useAuthUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/useAuthUser";
 
 const stats = ref(null);
 const authUser = useAuthUser();
