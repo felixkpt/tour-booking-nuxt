@@ -81,7 +81,7 @@ import { ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { appConfig } from "~/utils/helpers";
-import { useAuthUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/useAuthUser";
 
 const form = ref({
   email: "",

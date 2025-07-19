@@ -22,3 +22,21 @@ export interface FetchRecordsResponse {
 export interface ServerModelOptionType {
     [key: string]: FetchRecordsResponse
 }
+
+export type TourDestination = {
+    id: number;
+    name: string;
+    content: string;
+    featured_image: string;
+    image_slides: string[];
+}
+
+// Define the Tour type
+export type TourType = {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    slots: number;
+    destination: TourDestination;
+}

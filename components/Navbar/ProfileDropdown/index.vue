@@ -11,7 +11,7 @@
         />
         <img
           v-else
-          src="https://via.placeholder.com/40"
+          :src="defaultAvatar"
           alt="Default Avatar"
           class="h-10 w-10 rounded-full border border-light-primary-subtle dark:border-dark-primary-subtle"
         />
@@ -65,7 +65,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useAuthUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/useAuthUser";
 
 export default defineComponent({
   props: {
@@ -76,6 +76,8 @@ export default defineComponent({
   },
   setup() {
     const authUser = useAuthUser();
+    const defaultAvatar = "/images/default-avatar.png"; // Set your default avatar path here
+
     // Handle authUser logout
     const handleLogout = () => {
       localStorage.removeItem("authUser");
@@ -86,6 +88,7 @@ export default defineComponent({
     return {
       authUser,
       handleLogout,
+      defaultAvatar,
     };
   },
 });

@@ -128,7 +128,7 @@
 import { ref, computed, watch, onMounted, defineProps, defineEmits } from "vue";
 import axios from "axios";
 import { appConfig } from "~/utils/helpers";
-import { useAuthUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/useAuthUser";
 
 import _ from "lodash";
 const { debounce } = _;

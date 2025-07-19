@@ -2,7 +2,14 @@ import { resolve } from 'path'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
+  features: {
+    clientLoader: false, // Disables the client-side loader
+  },
+  loading: false, // Disables the default loading bar
+
   app: {
+    spaLoadingTemplate: false,
     head: {
       title: 'TravelMate',
       meta: [
@@ -37,7 +44,7 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2024-09-02',
-  
+
   runtimeConfig: {
     // Private keys are only available server-side
     apiSecret: '123',

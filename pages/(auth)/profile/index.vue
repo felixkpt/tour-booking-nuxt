@@ -61,7 +61,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { useAuthUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/useAuthUser";
 import BasicInfo from "./Includes/BasicInfo.vue";
 import UpdatePass from "./Includes/UpdatePass.vue";
 

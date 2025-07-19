@@ -4,7 +4,7 @@
 import { onMounted, onUnmounted } from "vue";
 import { publish, subscribe } from "~/components/BaseComponents/utils/pubSub";
 import { autoRequest } from "../utils/autoRequest";
-import { useAuthUser } from "~/composables/user";
+import { useAuthUser } from "~/composables/useAuthUser";
 
 const props = defineProps({
   modelID: String,

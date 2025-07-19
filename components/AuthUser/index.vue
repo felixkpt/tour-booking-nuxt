@@ -3,9 +3,9 @@
 import { useRouter } from "vue-router";
 
 import { onMounted } from "vue";
-import { useAuthUser } from "~/composables/user";
 import axios from "axios";
 import { appConfig } from "~/utils/helpers";
+import { useAuthUser } from "../../composables/useAuthUser";
 
 const props = defineProps({
   isRequired: {
